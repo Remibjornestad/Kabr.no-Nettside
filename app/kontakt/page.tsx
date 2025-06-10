@@ -2,6 +2,9 @@
 
 import { MapPin, Phone, Mail, User, Clock, Calendar } from "lucide-react"
 import OptimizedImage from "@/components/optimized-image"
+import SEOHead from "@/components/seo-head"
+import Breadcrumbs from "@/components/breadcrumbs"
+import StructuredData from "@/components/structured-data"
 import { useCMSData } from "@/hooks/use-cms-data"
 
 export default function Kontakt() {
@@ -31,13 +34,70 @@ export default function Kontakt() {
     )
   }
 
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Hjem",
+        item: "https://www.kabr.no",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Kontakt",
+        item: "https://www.kabr.no/kontakt",
+      },
+    ],
+  }
+
+  const localBusinessData = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Karmsund ABR - avdeling Bjørnestad",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: data.generalContactInfo.address,
+      addressLocality: "Tonstad",
+      postalCode: "4440",
+      addressCountry: "NO",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 58.6486526,
+      longitude: 6.5466037,
+    },
+    telephone: "+47-924-21-020",
+    email: "Bjørnestad@kabr.no",
+    openingHours: data.generalContactInfo.openingHours
+      ?.split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean),
+    url: "https://www.kabr.no",
+  }
+
   return (
     <div className="flex flex-col w-full">
+      <SEOHead
+        title="Kontakt oss - Ta kontakt for mer informasjon"
+        description="Kontakt Karmsund ABR Bjørnestad for informasjon om vårt tilbud. Finn kontaktinformasjon, åpningstider og veibeskrivelse til våre lokaler på Tonstad."
+        keywords="kontakt, karmsund abr, bjørnestad, telefon, epost, adresse, tonstad, sirdal, åpningstider"
+        canonical="/kontakt"
+        ogImage={data.contactHero.backgroundImage}
+      />
+
+      <StructuredData data={breadcrumbData} />
+      <StructuredData data={localBusinessData} />
+
+      <Breadcrumbs items={[{ label: "Kontakt" }]} />
+
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] min-h-[300px]">
         <OptimizedImage
           src={data.contactHero.backgroundImage || "/placeholder.svg"}
-          alt="Kontakt Bjørnestad"
+          alt="Kontakt Bjørnestad - Karmsund ABR"
           fill
           priority
           className="object-cover brightness-[0.85]"
@@ -66,11 +126,11 @@ export default function Kontakt() {
 
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             {data.contactPeople.map((person) => (
-              <div key={person.id} className="text-center">
+              <article key={person.id} className="text-center">
                 <div className="mx-auto overflow-hidden h-48 w-48 mb-4 border-2 border-steel-200">
                   <OptimizedImage
                     src={person.image || "/person-silhouette.png"}
-                    alt={person.name}
+                    alt={`${person.name} - ${person.title} ved Karmsund ABR Bjørnestad`}
                     width={192}
                     height={192}
                     className="object-cover w-full h-full"
@@ -82,17 +142,21 @@ export default function Kontakt() {
                   {person.phone && (
                     <div className="flex items-center justify-center">
                       <Phone className="h-5 w-5 text-steel-500 mr-2" />
-                      <p className="text-slate-700">{person.phone}</p>
+                      <a href={`tel:${person.phone}`} className="text-slate-700 hover:text-steel-600">
+                        {person.phone}
+                      </a>
                     </div>
                   )}
                   {person.email && (
                     <div className="flex items-center justify-center">
                       <Mail className="h-5 w-5 text-steel-500 mr-2" />
-                      <p className="text-slate-700">{person.email}</p>
+                      <a href={`mailto:${person.email}`} className="text-slate-700 hover:text-steel-600">
+                        {person.email}
+                      </a>
                     </div>
                   )}
                 </div>
-              </div>
+              </article>
             ))}
           </div>
 
@@ -141,7 +205,7 @@ export default function Kontakt() {
               <h3 className="text-xl font-semibold mb-6 pb-2 border-b border-steel-200">Finn veien til oss</h3>
               <div className="relative h-[300px] rounded-lg overflow-hidden mb-4 border border-steel-200">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2056.1234567890123!2d6.7123456789012!3d58.9123456789012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTjCsDU0JzQ0LjQiTiA2wrA0Mic0NC40IkU!5e0!3m2!1sno!2sno!4v1620123456789!5m2!1sno!2sno"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2056.123456789!2d6.5440288!3d58.6486526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x463993ef25cc9de1%3A0xbb33232d98e04922!2sABR%20Bj%C3%B8rnestad!5e0!3m2!1sno!2sno!4v1620123456789!5m2!1sno!2sno"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -151,11 +215,6 @@ export default function Kontakt() {
                   title="Kart til Karmsund ABR Bjørnestad"
                 ></iframe>
               </div>
-              <p className="text-slate-700">
-                Bjørnestad ligger på grensen mellom Agder og Rogaland, i naturskjønne omgivelser på Sirdal, Tonstad. Fra
-                E39 følg skilting mot Tonstad. Når du kommer til Tonstad, følg Sirdalsveien ca. 5 km til du ser skilting
-                til Bjørnestad på høyre side.
-              </p>
             </div>
           </div>
         </div>
@@ -168,13 +227,13 @@ export default function Kontakt() {
 
           <div className="grid md:grid-cols-2 gap-12 mb-12">
             {data.applicationAndInquiries.sections.map((section, index) => (
-              <div key={index} className="bg-white p-6 border-t-4 border-steel-500">
+              <article key={index} className="bg-white p-6 border-t-4 border-steel-500">
                 <div className="flex items-center mb-4">
                   <User className="h-6 w-6 text-steel-600 mr-3" />
                   <h3 className="text-xl font-semibold">{section.title}</h3>
                 </div>
                 <div className="text-slate-700 whitespace-pre-line">{section.content}</div>
-              </div>
+              </article>
             ))}
           </div>
         </div>

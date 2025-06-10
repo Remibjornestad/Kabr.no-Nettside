@@ -3,6 +3,9 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import OptimizedImage from "@/components/optimized-image"
+import SEOHead from "@/components/seo-head"
+import Breadcrumbs from "@/components/breadcrumbs"
+import StructuredData from "@/components/structured-data"
 import { useCMSData } from "@/hooks/use-cms-data"
 
 export default function OmOss() {
@@ -32,13 +35,44 @@ export default function OmOss() {
     )
   }
 
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Hjem",
+        item: "https://www.kabr.no",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Om oss",
+        item: "https://www.kabr.no/om-oss",
+      },
+    ],
+  }
+
   return (
     <div className="flex flex-col w-full">
+      <SEOHead
+        title="Om oss - Vårt team og verdier"
+        description="Lær mer om Karmsund ABR Bjørnestad, vårt erfarne team, verdier og metoder innen rusrehabilitering og psykisk helsehjelp."
+        keywords="om karmsund abr, team, ansatte, verdier, metoder, rusrehabilitering, psykisk helse, bjørnestad"
+        canonical="/om-oss"
+        ogImage={data.aboutHero.backgroundImage}
+      />
+
+      <StructuredData data={breadcrumbData} />
+
+      <Breadcrumbs items={[{ label: "Om oss" }]} />
+
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] min-h-[300px]">
         <OptimizedImage
           src={data.aboutHero.backgroundImage || "/placeholder.svg"}
-          alt="Teamet ved Bjørnestad"
+          alt="Teamet ved Bjørnestad - Karmsund ABR"
           fill
           priority
           className="object-cover brightness-[0.85]"
@@ -57,19 +91,23 @@ export default function OmOss() {
       {/* Om Karmsund ABR */}
       <section className="py-16 px-4 md:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+          <div
+            className={`grid ${data.aboutKarmsundText.image ? "md:grid-cols-2" : "md:grid-cols-1"} gap-12 items-center`}
+          >
+            <div className={data.aboutKarmsundText.image ? "" : "text-center"}>
               <h2 className="text-3xl font-bold text-slate-800 mb-6">{data.aboutKarmsundText.title}</h2>
               <div className="text-lg text-slate-700 whitespace-pre-line">{data.aboutKarmsundText.content}</div>
             </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden border border-steel-200">
-              <OptimizedImage
-                src="https://i.ibb.co/DPPwGjKg/487043534-1132858625520829-4135336808992699070-n.jpg"
-                alt="Karmsund ABR Bjørnestad"
-                fill
-                className="object-cover"
-              />
-            </div>
+            {data.aboutKarmsundText.image && (
+              <div className="relative h-[400px] rounded-lg overflow-hidden border border-steel-200">
+                <OptimizedImage
+                  src={data.aboutKarmsundText.image}
+                  alt={data.aboutKarmsundText.imageAlt || "Karmsund ABR Bjørnestad - våre fasiliteter"}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -81,10 +119,10 @@ export default function OmOss() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {data.valuesAndMethods.sections.map((section, index) => (
-              <div key={index} className="bg-white p-6 border-t-4 border-steel-500">
+              <article key={index} className="bg-white p-6 border-t-4 border-steel-500">
                 <h3 className="text-xl font-semibold mb-4">{section.title}</h3>
                 <p className="text-slate-700 whitespace-pre-line">{section.content}</p>
-              </div>
+              </article>
             ))}
           </div>
 
@@ -104,11 +142,11 @@ export default function OmOss() {
 
           <div className="grid md:grid-cols-3 gap-10 mb-12">
             {data.personalGroup.people.map((person) => (
-              <div key={person.id} className="text-center">
+              <article key={person.id} className="text-center">
                 <div className="mx-auto overflow-hidden h-48 w-48 mb-4 border-2 border-steel-200">
                   <OptimizedImage
                     src={person.image || "/person-silhouette.png"}
-                    alt={person.name}
+                    alt={`${person.name} - ${person.title} ved Karmsund ABR Bjørnestad`}
                     width={192}
                     height={192}
                     className="object-cover w-full h-full"
@@ -116,7 +154,7 @@ export default function OmOss() {
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800">{person.name}</h3>
                 <p className="text-steel-600">{person.title}</p>
-              </div>
+              </article>
             ))}
           </div>
 

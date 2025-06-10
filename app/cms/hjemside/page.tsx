@@ -209,6 +209,18 @@ export default function CMSHjemside() {
                   onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, content: value } })}
                   multiline
                 />
+                <ImageField
+                  label="Bilde"
+                  value={data.aboutKarmsund.image || ""}
+                  onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, image: value } })}
+                  placeholder="Last opp bilde eller bruk URL"
+                />
+                <TextEditor
+                  title="Bildetekst (alt-tekst)"
+                  value={data.aboutKarmsund.imageAlt || ""}
+                  onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, imageAlt: value } })}
+                  placeholder="Beskrivelse av bildet for skjermlesere"
+                />
               </div>
             </section>
 

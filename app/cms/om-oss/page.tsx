@@ -147,6 +147,18 @@ export default function CMSOmOss() {
                 value={data.aboutKarmsundText.title}
                 onChange={(value) => updateData({ aboutKarmsundText: { ...data.aboutKarmsundText, title: value } })}
               />
+              <ImageField
+                label="Bilde"
+                value={data.aboutKarmsundText.image || ""}
+                onChange={(value) => updateData({ aboutKarmsundText: { ...data.aboutKarmsundText, image: value } })}
+                placeholder="Last opp bilde eller bruk URL"
+              />
+              <TextEditor
+                title="Bildetekst (alt-tekst)"
+                value={data.aboutKarmsundText.imageAlt || ""}
+                onChange={(value) => updateData({ aboutKarmsundText: { ...data.aboutKarmsundText, imageAlt: value } })}
+                placeholder="Beskrivelse av bildet for tilgjengelighet"
+              />
               <TextEditor
                 title="Innhold"
                 value={data.aboutKarmsundText.content}

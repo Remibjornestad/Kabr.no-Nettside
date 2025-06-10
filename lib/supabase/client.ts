@@ -5,19 +5,21 @@ import type { Database } from "./types"
 let browserClient: ReturnType<typeof createBrowserClient<Database>> | undefined
 
 export function createClient() {
+  // For preview environment, use hardcoded values
+  // In production, these should come from environment variables
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dtuhdljrhszbxonsttrn.supabase.co"
-  const supabaseKey =
+  const supabaseAnonKey =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0dWhkbGpyaHN6YnhvbnN0dHJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxMzI1MDMsImV4cCI6MjA2NDcwODUwM30.4WpZKUdDcpeE_L0jpEVJKGvMx541LglutsMRxCDeiSw"
 
   // Server-side: returner alltid ny klient
   if (typeof window === "undefined") {
-    return createBrowserClient<Database>(supabaseUrl, supabaseKey)
+    return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
   }
 
   // Browser-side: bruk singleton
   if (!browserClient) {
-    browserClient = createBrowserClient<Database>(supabaseUrl, supabaseKey)
+    browserClient = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
   }
 
   return browserClient

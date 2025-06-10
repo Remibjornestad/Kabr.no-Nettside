@@ -4,6 +4,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import SEOHead from "@/components/seo-head"
+import Breadcrumbs from "@/components/breadcrumbs"
+import StructuredData from "@/components/structured-data"
 import { useCMSData } from "@/hooks/use-cms-data"
 
 export default function VartTilbud() {
@@ -33,13 +36,61 @@ export default function VartTilbud() {
     )
   }
 
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Hjem",
+        item: "https://www.kabr.no",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Vårt tilbud",
+        item: "https://www.kabr.no/vart-tilbud",
+      },
+    ],
+  }
+
+  const serviceData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Rusrehabilitering og psykisk helsehjelp",
+    provider: {
+      "@type": "Organization",
+      name: "Karmsund ABR - avdeling Bjørnestad",
+    },
+    description: data.whatWeOffer.content,
+    areaServed: {
+      "@type": "Country",
+      name: "Norway",
+    },
+    serviceType: "Healthcare",
+  }
+
   return (
     <div className="flex flex-col w-full">
+      <SEOHead
+        title="Vårt tilbud - Rusrehabilitering og psykisk helse"
+        description="Utforsk vårt helhetlige rehabiliteringstilbud for rus og psykiske helseutfordringer. Individuell oppfølging, aktiviteter og trygg bolig på Bjørnestad."
+        keywords="rusrehabilitering, psykisk helse, rehabilitering, LAR, ROP, aktiviteter, individuell oppfølging, bolig, bjørnestad"
+        canonical="/vart-tilbud"
+        ogImage={data.offerHero.backgroundImage}
+      />
+
+      <StructuredData data={breadcrumbData} />
+      <StructuredData data={serviceData} />
+
+      <Breadcrumbs items={[{ label: "Vårt tilbud" }]} />
+
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] min-h-[300px]">
         <Image
           src={data.offerHero.backgroundImage || "/placeholder.svg"}
-          alt="Aktiviteter ved Bjørnestad"
+          alt="Aktiviteter ved Bjørnestad - Karmsund ABR"
           fill
           priority
           className="object-cover brightness-[0.85]"
@@ -70,7 +121,7 @@ export default function VartTilbud() {
 
           <div className="space-y-12">
             {data.rehabilitationSections.map((section, index) => (
-              <div key={section.id} className="grid md:grid-cols-2 gap-8 items-center">
+              <article key={section.id} className="grid md:grid-cols-2 gap-8 items-center">
                 <div className={index % 2 === 1 ? "order-2 md:order-1" : ""}>
                   <h3 className="text-2xl font-semibold mb-4">{section.title}</h3>
                   <div className="text-slate-700 whitespace-pre-line">{section.content}</div>
@@ -80,12 +131,12 @@ export default function VartTilbud() {
                 >
                   <Image
                     src={section.image || "/placeholder.svg"}
-                    alt={section.imageAlt}
+                    alt={section.imageAlt || `${section.title} - Karmsund ABR Bjørnestad`}
                     fill
                     className="object-cover"
                   />
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
@@ -129,7 +180,7 @@ export default function VartTilbud() {
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-md">
               <Image
                 src={data.facilities.image || "/placeholder.svg"}
-                alt={data.facilities.imageAlt}
+                alt={data.facilities.imageAlt || "Fasiliteter ved Karmsund ABR Bjørnestad"}
                 fill
                 className="object-cover"
               />

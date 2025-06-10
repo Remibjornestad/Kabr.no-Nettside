@@ -10,6 +10,8 @@ export interface HeroSection {
 export interface TextSection {
   title: string
   content: string
+  image?: string
+  imageAlt?: string
 }
 
 export interface ImageGalleryItem {

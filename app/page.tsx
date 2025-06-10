@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import ImageGallery from "@/components/image-gallery"
 import OptimizedImage from "@/components/optimized-image"
 import StructuredData from "@/components/structured-data"
+import SEOHead from "@/components/seo-head"
 import { useCMSData } from "@/hooks/use-cms-data"
 
 export default function Home() {
@@ -54,17 +55,46 @@ export default function Home() {
       contactType: "customer service",
       email: "Bjørnestad@kabr.no",
     },
+    sameAs: ["https://www.facebook.com/karmsundabr", "https://www.linkedin.com/company/karmsund-abr"],
+    foundingDate: "1995",
+    areaServed: {
+      "@type": "Country",
+      name: "Norway",
+    },
+    serviceType: "Rusrehabilitering og psykisk helsehjelp",
+  }
+
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Hjem",
+        item: "https://www.kabr.no",
+      },
+    ],
   }
 
   return (
     <div className="flex flex-col w-full">
+      <SEOHead
+        title="Omsorgstilbud for rus og psykisk helse"
+        description="Karmsund ABR avdeling Bjørnestad tilbyr et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer i trygge omgivelser på Tonstad, Sirdal."
+        keywords="rusrehabilitering, psykisk helse, omsorgstilbud, Bjørnestad, Karmsund ABR, Tonstad, Sirdal, ROP, LAR, rehabilitering"
+        canonical="/"
+        ogImage={data.homeHero.backgroundImage}
+      />
+
       <StructuredData data={organizationData} />
+      <StructuredData data={breadcrumbData} />
 
       {/* Hero Section */}
       <section className="relative w-full h-[70vh] min-h-[500px]">
         <OptimizedImage
           src={data.homeHero.backgroundImage || "/placeholder.svg"}
-          alt="Naturskjønt landskap ved Bjørnestad"
+          alt="Naturskjønt landskap ved Bjørnestad - Karmsund ABR"
           fill
           priority
           className="object-cover brightness-[0.85]"
@@ -105,22 +135,24 @@ export default function Home() {
       {/* Kort om hvem vi er */}
       <section className="py-16 px-4 md:px-8 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+          <div className={`grid ${data.aboutKarmsund.image ? "md:grid-cols-2" : "md:grid-cols-1"} gap-12 items-center`}>
+            <div className={data.aboutKarmsund.image ? "" : "text-center"}>
               <h2 className="text-3xl font-bold text-slate-800 mb-6">{data.aboutKarmsund.title}</h2>
               <div className="text-lg text-slate-700 mb-6 whitespace-pre-line">{data.aboutKarmsund.content}</div>
               <Button asChild className="bg-steel-500 hover:bg-steel-600 text-white">
                 <Link href="/om-oss">Les mer om oss</Link>
               </Button>
             </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden border border-steel-200">
-              <OptimizedImage
-                src="https://i.ibb.co/8g5F0Qf8/488622915-1135529365253755-4122780821380544378-n.jpg"
-                alt="Karmsund ABR Bjørnestad"
-                fill
-                className="object-cover"
-              />
-            </div>
+            {data.aboutKarmsund.image && (
+              <div className="relative h-[400px] rounded-lg overflow-hidden border border-steel-200">
+                <OptimizedImage
+                  src={data.aboutKarmsund.image}
+                  alt={data.aboutKarmsund.imageAlt || "Karmsund ABR Bjørnestad - våre fasiliteter"}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>

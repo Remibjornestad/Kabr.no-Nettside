@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,6 +20,52 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [attemptCount, setAttemptCount] = useState(0)
   const [isBlocked, setIsBlocked] = useState(false)
+  const [blockTimeRemaining, setBlockTimeRemaining] = useState(0)
+
+  // Sjekk for eksisterende blokkering ved oppstart
+  useEffect(() => {
+    const checkExistingBlock = () => {
+      const blockData = localStorage.getItem("cms_login_block")
+      if (blockData) {
+        const { blockUntil, attempts } = JSON.parse(blockData)
+        const now = Date.now()
+
+        if (now < blockUntil) {
+          setIsBlocked(true)
+          setAttemptCount(attempts)
+          setBlockTimeRemaining(Math.ceil((blockUntil - now) / 1000))
+        } else {
+          // Blokkering er utløpt, fjern fra localStorage
+          localStorage.removeItem("cms_login_block")
+        }
+      }
+    }
+
+    checkExistingBlock()
+  }, [])
+
+  // Countdown timer for blokkering
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null
+
+    if (isBlocked && blockTimeRemaining > 0) {
+      interval = setInterval(() => {
+        setBlockTimeRemaining((prev) => {
+          if (prev <= 1) {
+            setIsBlocked(false)
+            setAttemptCount(0)
+            localStorage.removeItem("cms_login_block")
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+    }
+
+    return () => {
+      if (interval) clearInterval(interval)
+    }
+  }, [isBlocked, blockTimeRemaining])
 
   const router = useRouter()
   const supabase = createClient()
@@ -28,20 +74,9 @@ export default function LoginForm() {
     e.preventDefault()
 
     if (isBlocked) {
-      setError("For mange forsøk. Vent 5 minutter før du prøver igjen.")
-      return
-    }
-
-    if (attemptCount >= 5) {
-      setIsBlocked(true)
-      setError("For mange forsøk. Vent 5 minutter før du prøver igjen.")
-      setTimeout(
-        () => {
-          setIsBlocked(false)
-          setAttemptCount(0)
-        },
-        5 * 60 * 1000,
-      ) // 5 minutter
+      const minutes = Math.floor(blockTimeRemaining / 60)
+      const seconds = blockTimeRemaining % 60
+      setError(`For mange forsøk. Vent ${minutes}:${seconds.toString().padStart(2, "0")} før du prøver igjen.`)
       return
     }
 
@@ -52,10 +87,9 @@ export default function LoginForm() {
       const normalizedEmail = email.toLowerCase().trim()
 
       // Sjekk tillatte e-poster før innlogging
-      const allowedEmails = (process.env.NEXT_PUBLIC_CMS_ALLOWED_EMAILS || "remi@prosjektai.no").split(",")
+      const allowedEmails = process.env.NEXT_PUBLIC_CMS_ALLOWED_EMAILS?.split(",") || []
       if (allowedEmails.length > 0 && !allowedEmails.includes(normalizedEmail)) {
-        setError("Du har ikke tilgang til dette systemet.")
-        setAttemptCount((prev) => prev + 1)
+        handleFailedAttempt("Du har ikke tilgang til dette systemet.")
         return
       }
 
@@ -67,19 +101,38 @@ export default function LoginForm() {
 
       if (error) {
         console.error("Auth error:", error)
-        setError("Ugyldig e-post eller passord.")
-        setAttemptCount((prev) => prev + 1)
+        handleFailedAttempt("Ugyldig e-post eller passord.")
       } else if (data.user) {
-        // Suksess - redirect til CMS
+        // Suksess - fjern blokkering og redirect til CMS
+        localStorage.removeItem("cms_login_block")
+        setAttemptCount(0)
         router.push("/cms")
         router.refresh()
       }
     } catch (err) {
       console.error("Unexpected error:", err)
-      setError("En uventet feil oppstod. Prøv igjen.")
-      setAttemptCount((prev) => prev + 1)
+      handleFailedAttempt("En uventet feil oppstod. Prøv igjen.")
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleFailedAttempt = (errorMessage: string) => {
+    const newAttemptCount = attemptCount + 1
+    setAttemptCount(newAttemptCount)
+    setError(errorMessage)
+
+    if (newAttemptCount >= 5) {
+      const blockUntil = Date.now() + 5 * 60 * 1000 // 5 minutter
+      const blockData = {
+        blockUntil,
+        attempts: newAttemptCount,
+      }
+
+      localStorage.setItem("cms_login_block", JSON.stringify(blockData))
+      setIsBlocked(true)
+      setBlockTimeRemaining(5 * 60) // 5 minutter i sekunder
+      setError("For mange feilede forsøk. Du er blokkert i 5 minutter.")
     }
   }
 
@@ -173,7 +226,19 @@ export default function LoginForm() {
               </Link>
             </div>
 
-            {attemptCount > 0 && <div className="text-center text-xs text-steel-500">Forsøk: {attemptCount}/5</div>}
+            {attemptCount > 0 && !isBlocked && (
+              <div className="text-center text-xs text-steel-500">Forsøk: {attemptCount}/5</div>
+            )}
+
+            {isBlocked && blockTimeRemaining > 0 && (
+              <div className="text-center">
+                <div className="text-sm text-red-600 font-medium">Konto blokkert</div>
+                <div className="text-xs text-red-500">
+                  Tid igjen: {Math.floor(blockTimeRemaining / 60)}:
+                  {(blockTimeRemaining % 60).toString().padStart(2, "0")}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
