@@ -3,21 +3,17 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Undo, Redo, Eye } from "lucide-react"
+import { ArrowLeft, Save, Undo, Redo } from "lucide-react"
 import TextEditor from "@/components/cms/text-editor"
 import ImageField from "@/components/cms/image-field"
 import ImageGalleryEditor from "@/components/cms/image-gallery-editor"
-import ActivityLog from "@/components/cms/activity-log"
 import { getCMSData, saveCMSSection } from "@/lib/cms-data-supabase"
 import { useUndoRedo } from "@/hooks/use-undo-redo"
 import type { CMSData } from "@/types/cms"
-import { usePreview } from "@/components/cms/preview-context"
-import PagePreview from "@/components/cms/page-preview"
 
 export default function CMSHjemside() {
   const [initialData, setInitialData] = useState<CMSData | null>(null)
   const [saving, setSaving] = useState(false)
-  const { previewData, setPreviewData, isPreviewVisible, setPreviewVisible, setPreviewPage } = usePreview()
 
   const {
     state: data,
@@ -34,20 +30,9 @@ export default function CMSHjemside() {
       const cmsData = await getCMSData()
       setInitialData(cmsData)
       resetData(cmsData)
-      // Set initial preview data
-      setPreviewData(cmsData)
-      // Set current page type
-      setPreviewPage("home")
     }
     loadData()
-  }, [resetData, setPreviewData, setPreviewPage])
-
-  // Update preview data when form data changes
-  useEffect(() => {
-    if (data) {
-      setPreviewData(data)
-    }
-  }, [data, setPreviewData])
+  }, [resetData])
 
   const handleSave = async () => {
     if (!data || !initialData) return
@@ -95,10 +80,6 @@ export default function CMSHjemside() {
 
   const hasChanges = data && initialData && JSON.stringify(data) !== JSON.stringify(initialData)
 
-  const togglePreview = () => {
-    setPreviewVisible(!isPreviewVisible)
-  }
-
   if (!data) return <div className="p-8">Laster...</div>
 
   return (
@@ -117,17 +98,6 @@ export default function CMSHjemside() {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Preview button */}
-            <Button
-              onClick={togglePreview}
-              variant={isPreviewVisible ? "default" : "outline"}
-              size="sm"
-              className={isPreviewVisible ? "bg-blue-600" : ""}
-            >
-              <Eye className="h-4 w-4 mr-1" />
-              {isPreviewVisible ? "Skjul forhåndsvisning" : "Forhåndsvisning"}
-            </Button>
-
             {/* Undo/Redo buttons */}
             <Button onClick={undo} disabled={!canUndo} variant="outline" size="sm" title="Angre (Ctrl+Z)">
               <Undo className="h-4 w-4" />
@@ -143,161 +113,147 @@ export default function CMSHjemside() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Main content - adjust column width based on preview visibility */}
-          <div className={`${isPreviewVisible ? "lg:col-span-7" : "lg:col-span-9"} space-y-8`}>
-            {/* Hero Section */}
-            <section className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Hero-seksjon</h2>
-              <div className="space-y-4">
-                <TextEditor
-                  title="Hovedtittel"
-                  value={data.homeHero.title}
-                  onChange={(value) => updateData({ homeHero: { ...data.homeHero, title: value } })}
-                  placeholder="Velkommen til Karmsund ABR"
-                />
-                <TextEditor
-                  title="Undertittel"
-                  value={data.homeHero.subtitle}
-                  onChange={(value) => updateData({ homeHero: { ...data.homeHero, subtitle: value } })}
-                  placeholder="avdeling Bjørnestad"
-                />
-                <TextEditor
-                  title="Beskrivelse"
-                  value={data.homeHero.description}
-                  onChange={(value) => updateData({ homeHero: { ...data.homeHero, description: value } })}
-                  multiline
-                  placeholder="En kort beskrivelse av tilbudet"
-                />
-
-                <ImageField
-                  label="Bakgrunnsbilde"
-                  value={data.homeHero.backgroundImage}
-                  onChange={(value) => updateData({ homeHero: { ...data.homeHero, backgroundImage: value } })}
-                  placeholder="Last opp bakgrunnsbilde eller bruk URL"
-                />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <TextEditor
-                    title="Primær knapp tekst"
-                    value={data.homeHero.primaryButtonText}
-                    onChange={(value) => updateData({ homeHero: { ...data.homeHero, primaryButtonText: value } })}
-                    placeholder="Se vårt tilbud"
-                  />
-                  <TextEditor
-                    title="Sekundær knapp tekst"
-                    value={data.homeHero.secondaryButtonText}
-                    onChange={(value) => updateData({ homeHero: { ...data.homeHero, secondaryButtonText: value } })}
-                    placeholder="Kontakt oss"
-                  />
-                </div>
-              </div>
-            </section>
-
-            {/* Om Karmsund ABR */}
-            <section className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Om Karmsund ABR</h2>
-              <div className="space-y-4">
-                <TextEditor
-                  title="Tittel"
-                  value={data.aboutKarmsund.title}
-                  onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, title: value } })}
-                />
-                <TextEditor
-                  title="Innhold"
-                  value={data.aboutKarmsund.content}
-                  onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, content: value } })}
-                  multiline
-                />
-                <ImageField
-                  label="Bilde"
-                  value={data.aboutKarmsund.image || ""}
-                  onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, image: value } })}
-                  placeholder="Last opp bilde eller bruk URL"
-                />
-                <TextEditor
-                  title="Bildetekst (alt-tekst)"
-                  value={data.aboutKarmsund.imageAlt || ""}
-                  onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, imageAlt: value } })}
-                  placeholder="Beskrivelse av bildet for skjermlesere"
-                />
-              </div>
-            </section>
-
-            {/* Vårt tilbud */}
-            <section className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Vårt tilbud</h2>
-              <div className="space-y-4">
-                <TextEditor
-                  title="Tittel"
-                  value={data.ourOffer.title}
-                  onChange={(value) => updateData({ ourOffer: { ...data.ourOffer, title: value } })}
-                />
-                <TextEditor
-                  title="Innhold"
-                  value={data.ourOffer.content}
-                  onChange={(value) => updateData({ ourOffer: { ...data.ourOffer, content: value } })}
-                  multiline
-                />
-              </div>
-            </section>
-
-            {/* Våre verdier */}
-            <section className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Våre verdier</h2>
-              <div className="space-y-4">
-                <TextEditor
-                  title="Tittel"
-                  value={data.ourValues.title}
-                  onChange={(value) => updateData({ ourValues: { ...data.ourValues, title: value } })}
-                />
-                <TextEditor
-                  title="Innhold"
-                  value={data.ourValues.content}
-                  onChange={(value) => updateData({ ourValues: { ...data.ourValues, content: value } })}
-                  multiline
-                />
-              </div>
-            </section>
-
-            {/* Bildegalleri */}
-            <section className="bg-white p-6 rounded-lg shadow-sm">
-              <ImageGalleryEditor
-                title="Inntrykk fra Bjørnestad - Bildegalleri"
-                images={data.imageGallery}
-                onChange={(images) => updateData({ imageGallery: images })}
+        <div className="space-y-8">
+          {/* Hero Section */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Hero-seksjon</h2>
+            <div className="space-y-4">
+              <TextEditor
+                title="Hovedtittel"
+                value={data.homeHero.title}
+                onChange={(value) => updateData({ homeHero: { ...data.homeHero, title: value } })}
+                placeholder="Velkommen til Karmsund ABR"
               />
-            </section>
+              <TextEditor
+                title="Undertittel"
+                value={data.homeHero.subtitle}
+                onChange={(value) => updateData({ homeHero: { ...data.homeHero, subtitle: value } })}
+                placeholder="avdeling Bjørnestad"
+              />
+              <TextEditor
+                title="Beskrivelse"
+                value={data.homeHero.description}
+                onChange={(value) => updateData({ homeHero: { ...data.homeHero, description: value } })}
+                multiline
+                placeholder="En kort beskrivelse av tilbudet"
+              />
 
-            {/* CTA */}
-            <section className="bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Er du interessert i vårt tilbud?</h2>
-              <div className="space-y-4">
+              <ImageField
+                label="Bakgrunnsbilde"
+                value={data.homeHero.backgroundImage}
+                onChange={(value) => updateData({ homeHero: { ...data.homeHero, backgroundImage: value } })}
+                placeholder="Last opp bakgrunnsbilde eller bruk URL"
+              />
+
+              <div className="grid grid-cols-2 gap-4">
                 <TextEditor
-                  title="Tittel"
-                  value={data.interestedCTA.title}
-                  onChange={(value) => updateData({ interestedCTA: { ...data.interestedCTA, title: value } })}
+                  title="Primær knapp tekst"
+                  value={data.homeHero.primaryButtonText}
+                  onChange={(value) => updateData({ homeHero: { ...data.homeHero, primaryButtonText: value } })}
+                  placeholder="Se vårt tilbud"
                 />
                 <TextEditor
-                  title="Innhold"
-                  value={data.interestedCTA.content}
-                  onChange={(value) => updateData({ interestedCTA: { ...data.interestedCTA, content: value } })}
-                  multiline
+                  title="Sekundær knapp tekst"
+                  value={data.homeHero.secondaryButtonText}
+                  onChange={(value) => updateData({ homeHero: { ...data.homeHero, secondaryButtonText: value } })}
+                  placeholder="Kontakt oss"
                 />
               </div>
-            </section>
-          </div>
+            </div>
+          </section>
 
-          {/* Sidebar with Activity Log or Preview */}
-          <div className={`${isPreviewVisible ? "lg:col-span-5" : "lg:col-span-3"}`}>
-            {isPreviewVisible ? (
-              <div className="sticky top-20 h-[calc(100vh-120px)] overflow-hidden border border-gray-200 rounded-lg shadow-sm">
-                <PagePreview pageType="home" data={previewData} isVisible={isPreviewVisible} onClose={togglePreview} />
-              </div>
-            ) : (
-              <ActivityLog />
-            )}
-          </div>
+          {/* Om Karmsund ABR */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Om Karmsund ABR</h2>
+            <div className="space-y-4">
+              <TextEditor
+                title="Tittel"
+                value={data.aboutKarmsund.title}
+                onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, title: value } })}
+              />
+              <TextEditor
+                title="Innhold"
+                value={data.aboutKarmsund.content}
+                onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, content: value } })}
+                multiline
+              />
+              <ImageField
+                label="Bilde"
+                value={data.aboutKarmsund.image || ""}
+                onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, image: value } })}
+                placeholder="Last opp bilde eller bruk URL"
+              />
+              <TextEditor
+                title="Bildetekst (alt-tekst)"
+                value={data.aboutKarmsund.imageAlt || ""}
+                onChange={(value) => updateData({ aboutKarmsund: { ...data.aboutKarmsund, imageAlt: value } })}
+                placeholder="Beskrivelse av bildet for skjermlesere"
+              />
+            </div>
+          </section>
+
+          {/* Vårt tilbud */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Vårt tilbud</h2>
+            <div className="space-y-4">
+              <TextEditor
+                title="Tittel"
+                value={data.ourOffer.title}
+                onChange={(value) => updateData({ ourOffer: { ...data.ourOffer, title: value } })}
+              />
+              <TextEditor
+                title="Innhold"
+                value={data.ourOffer.content}
+                onChange={(value) => updateData({ ourOffer: { ...data.ourOffer, content: value } })}
+                multiline
+              />
+            </div>
+          </section>
+
+          {/* Våre verdier */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Våre verdier</h2>
+            <div className="space-y-4">
+              <TextEditor
+                title="Tittel"
+                value={data.ourValues.title}
+                onChange={(value) => updateData({ ourValues: { ...data.ourValues, title: value } })}
+              />
+              <TextEditor
+                title="Innhold"
+                value={data.ourValues.content}
+                onChange={(value) => updateData({ ourValues: { ...data.ourValues, content: value } })}
+                multiline
+              />
+            </div>
+          </section>
+
+          {/* Bildegalleri */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <ImageGalleryEditor
+              title="Inntrykk fra Bjørnestad - Bildegalleri"
+              images={data.imageGallery}
+              onChange={(images) => updateData({ imageGallery: images })}
+            />
+          </section>
+
+          {/* CTA */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Er du interessert i vårt tilbud?</h2>
+            <div className="space-y-4">
+              <TextEditor
+                title="Tittel"
+                value={data.interestedCTA.title}
+                onChange={(value) => updateData({ interestedCTA: { ...data.interestedCTA, title: value } })}
+              />
+              <TextEditor
+                title="Innhold"
+                value={data.interestedCTA.content}
+                onChange={(value) => updateData({ interestedCTA: { ...data.interestedCTA, content: value } })}
+                multiline
+              />
+            </div>
+          </section>
         </div>
 
         {hasChanges && (
