@@ -121,20 +121,37 @@ export default function VartTilbud() {
 
           <div className="space-y-12">
             {data.rehabilitationSections.map((section, index) => (
-              <article key={section.id} className="grid md:grid-cols-2 gap-8 items-center">
-                <div className={index % 2 === 1 ? "order-2 md:order-1" : ""}>
-                  <h3 className="text-2xl font-semibold mb-4">{section.title}</h3>
+              <article key={section.id} className="space-y-6 md:space-y-0">
+                {/* Mobile layout: Title, text, image */}
+                <div className="block md:hidden space-y-4">
+                  <h3 className="text-2xl font-semibold">{section.title}</h3>
                   <div className="text-slate-700 whitespace-pre-line">{section.content}</div>
+                  <div className="relative h-[250px] rounded-lg overflow-hidden shadow-md">
+                    <Image
+                      src={section.image || "/placeholder.svg"}
+                      alt={section.imageAlt || `${section.title} - Karmsund ABR Bjørnestad`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
-                <div
-                  className={`relative h-[300px] rounded-lg overflow-hidden shadow-md ${index % 2 === 1 ? "order-1 md:order-2" : ""}`}
-                >
-                  <Image
-                    src={section.image || "/placeholder.svg"}
-                    alt={section.imageAlt || `${section.title} - Karmsund ABR Bjørnestad`}
-                    fill
-                    className="object-cover"
-                  />
+
+                {/* Desktop layout: Alternating image positions */}
+                <div className="hidden md:grid md:grid-cols-2 gap-8 items-center">
+                  <div className={index % 2 === 1 ? "order-2" : ""}>
+                    <h3 className="text-2xl font-semibold mb-4">{section.title}</h3>
+                    <div className="text-slate-700 whitespace-pre-line">{section.content}</div>
+                  </div>
+                  <div
+                    className={`relative h-[300px] rounded-lg overflow-hidden shadow-md ${index % 2 === 1 ? "order-1" : ""}`}
+                  >
+                    <Image
+                      src={section.image || "/placeholder.svg"}
+                      alt={section.imageAlt || `${section.title} - Karmsund ABR Bjørnestad`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
               </article>
             ))}

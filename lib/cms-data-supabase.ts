@@ -2,9 +2,24 @@ import { createClient } from "@/lib/supabase/client"
 import { logActivity } from "@/lib/activity-logger"
 import type { CMSData } from "@/types/cms"
 
-const supabase = createClient()
+// Check if Supabase environment variables are available
+const hasSupabaseConfig = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+let supabase: any = null
+
+if (hasSupabaseConfig) {
+  supabase = createClient()
+} else {
+  console.warn("Supabase environment variables not configured. Using default data.")
+}
 
 export async function getCMSData(): Promise<CMSData> {
+  // If Supabase is not configured, return default data immediately
+  if (!hasSupabaseConfig || !supabase) {
+    console.log("Using default CMS data (Supabase not configured)")
+    return getDefaultCMSData()
+  }
+
   try {
     // First, let's check if the table exists and has data
     const { data, error } = await supabase.from("cms_data").select("*").limit(1)
@@ -69,6 +84,11 @@ export async function getCMSData(): Promise<CMSData> {
 }
 
 export async function saveCMSSection(section: string, sectionData: any, oldData?: any): Promise<boolean> {
+  if (!hasSupabaseConfig || !supabase) {
+    console.warn("Cannot save CMS data: Supabase not configured")
+    return false
+  }
+
   try {
     const { data: user } = await supabase.auth.getUser()
 
@@ -183,6 +203,11 @@ export async function saveCMSSection(section: string, sectionData: any, oldData?
 }
 
 export async function saveCMSData(data: CMSData): Promise<boolean> {
+  if (!hasSupabaseConfig || !supabase) {
+    console.warn("Cannot save CMS data: Supabase not configured")
+    return false
+  }
+
   try {
     // Check table structure first
     const { data: tableInfo, error: tableError } = await supabase.from("cms_data").select("*").limit(1)
@@ -294,6 +319,11 @@ export async function saveCMSData(data: CMSData): Promise<boolean> {
 }
 
 export async function subscribeToCMSChanges(callback: (data: CMSData) => void) {
+  if (!hasSupabaseConfig || !supabase) {
+    console.warn("Cannot subscribe to CMS changes: Supabase not configured")
+    return () => {} // Return empty unsubscribe function
+  }
+
   const channel = supabase
     .channel("cms_data_changes")
     .on(
