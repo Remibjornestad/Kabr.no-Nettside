@@ -37,6 +37,13 @@ export interface RehabilitationSection {
   imageAlt: string
 }
 
+export interface EducationSection {
+  title: string
+  content: string
+  linkText: string
+  linkUrl: string
+}
+
 export interface CMSData {
   // Hjemside
   homeHero: HeroSection
@@ -63,8 +70,10 @@ export interface CMSData {
     content: string
     image: string
     imageAlt: string
+    images?: ImageGalleryItem[]
     features: string[]
   }
+  educationOpportunities: EducationSection
   referralAndAdmission: TextSection
 
   // Om oss side

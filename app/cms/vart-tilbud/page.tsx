@@ -8,6 +8,7 @@ import TextEditor from "@/components/cms/text-editor"
 import { getCMSData, saveCMSSection } from "@/lib/cms-data-supabase"
 import type { CMSData, RehabilitationSection } from "@/types/cms"
 import ImageField from "@/components/cms/image-field"
+import ImageGalleryEditor from "@/components/cms/image-gallery-editor"
 
 export default function CMSVartTilbud() {
   const [data, setData] = useState<CMSData | null>(null)
@@ -33,6 +34,7 @@ export default function CMSVartTilbud() {
         rehabilitationSections: data.rehabilitationSections,
         howWeWork: data.howWeWork,
         facilities: data.facilities,
+        educationOpportunities: data.educationOpportunities,
         referralAndAdmission: data.referralAndAdmission,
       }
 
@@ -367,16 +369,10 @@ export default function CMSVartTilbud() {
                 multiline
               />
 
-              <ImageField
-                label="Bilde"
-                value={data.facilities.image}
-                onChange={(value) => updateData({ facilities: { ...data.facilities, image: value } })}
-                placeholder="Last opp bilde eller bruk URL"
-              />
-              <TextEditor
-                title="Bilde alt-tekst"
-                value={data.facilities.imageAlt}
-                onChange={(value) => updateData({ facilities: { ...data.facilities, imageAlt: value } })}
+              <ImageGalleryEditor
+                title="Bilder av fasiliteter"
+                images={data.facilities.images || []}
+                onChange={(images) => updateData({ facilities: { ...data.facilities, images } })}
               />
 
               <div>
@@ -406,6 +402,44 @@ export default function CMSVartTilbud() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Utdanningsmuligheter */}
+          <section className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Utdanningsmuligheter</h2>
+            <div className="space-y-4">
+              <TextEditor
+                title="Tittel"
+                value={data.educationOpportunities.title}
+                onChange={(value) =>
+                  updateData({ educationOpportunities: { ...data.educationOpportunities, title: value } })
+                }
+              />
+              <TextEditor
+                title="Innhold"
+                value={data.educationOpportunities.content}
+                onChange={(value) =>
+                  updateData({ educationOpportunities: { ...data.educationOpportunities, content: value } })
+                }
+                multiline
+              />
+              <div className="grid grid-cols-2 gap-4">
+                <TextEditor
+                  title="Lenketekst"
+                  value={data.educationOpportunities.linkText}
+                  onChange={(value) =>
+                    updateData({ educationOpportunities: { ...data.educationOpportunities, linkText: value } })
+                  }
+                />
+                <TextEditor
+                  title="Lenke URL"
+                  value={data.educationOpportunities.linkUrl}
+                  onChange={(value) =>
+                    updateData({ educationOpportunities: { ...data.educationOpportunities, linkUrl: value } })
+                  }
+                />
               </div>
             </div>
           </section>

@@ -259,6 +259,7 @@ export async function saveCMSData(data: CMSData): Promise<boolean> {
         rehabilitationSections: data.rehabilitationSections,
         howWeWork: data.howWeWork,
         facilities: data.facilities,
+        educationOpportunities: data.educationOpportunities,
         referralAndAdmission: data.referralAndAdmission,
       }
 
@@ -464,6 +465,28 @@ function getDefaultCMSData(): CMSData {
       content: "På Bjørnestad tilbyr vi moderne og komfortable fasiliteter:",
       image: "https://i.ibb.co/6cgzsfRS/IMG-0008-1.jpg",
       imageAlt: "Fasiliteter ved Bjørnestad",
+      images: [
+        {
+          id: "1",
+          src: "https://i.ibb.co/6cgzsfRS/IMG-0008-1.jpg",
+          alt: "Nybygg - 10 egne rom, felles stue/kjøkken og aktivitetsrom",
+        },
+        {
+          id: "2",
+          src: "/placeholder-image.png",
+          alt: "Gamle bygg - 8 egne rom, felles stue og matsal",
+        },
+        {
+          id: "3",
+          src: "/placeholder-image.png",
+          alt: "Treningsrom - Moderne utstyr for styrke- og kondisjonstrening",
+        },
+        {
+          id: "4",
+          src: "/placeholder-image.png",
+          alt: "Fellesområder - Koselige oppholdsrom og TV-stue",
+        },
+      ],
       features: [
         "Nybygg: 10 egne rom, felles stue/kjøkken, aktivitetsrom, billiard, bordtennis og vaktrom.",
         "Gamle bygg: 8 egne rom, felles stue, toaletter/dusj, matsal og vaktrom.",
@@ -471,6 +494,13 @@ function getDefaultCMSData(): CMSData {
         "Hytter: 3 hytter som tidligere har blitt benyttet til personer med husdyr (ikke lenger i bruk for dette formålet pga. allergihensyn).",
         "Fellesområder: Koselige oppholdsrom, TV-stue og uteområder for sosialt samvær.",
       ],
+    },
+    educationOpportunities: {
+      title: "Utdanningsmuligheter",
+      content:
+        "Stiftelsen har samarbeidet med Hauge videregående skole i Haugesund området i mange år. Noen av våre beboere har søkt seg inn der og fått tilrettelagt skole og videreutdanning. Skolen tar inn personer som trenger tilrettelagt opplæring og gir muligheter for å fullføre videregående utdanning.\n\nDette samarbeidet gir våre beboere mulighet til å bygge videre på sin utdanning og skape et godt grunnlag for fremtiden. Utdanning kan være en viktig del av rehabiliteringsprosessen og bidra til økt selvtillit og nye karrieremuligheter.",
+      linkText: "Besøk Hauge videregående skole",
+      linkUrl: "https://hauge-vgs.no/",
     },
     referralAndAdmission: {
       title: "Henvisning og inntak",

@@ -14,7 +14,7 @@ import { useCMSData } from "@/hooks/use-cms-data"
 export default function VartTilbud() {
   const { data, loading, error } = useCMSData()
 
-  // Bilder for fasiliteter galleri
+  // Bilder for fasiliteter galleri - fallback hvis ingen bilder er definert
   const facilitiesImages = [
     {
       id: "1",
@@ -153,7 +153,7 @@ export default function VartTilbud() {
       {/* Rehabiliteringstilbud */}
       <section className="py-16 px-4 md:px-8 bg-steel-100">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-slate-800 mb-10">Vårt rehabiliteringstilbud</h2>
+          <h2 className="text-3xl font-bold text-slate-800 mb-10">Vårt rehabiliteringstil bud</h2>
 
           <div className="space-y-12">
             {data.rehabilitationSections.map((section, index) => (
@@ -242,24 +242,15 @@ export default function VartTilbud() {
       {/* Utdanningsmuligheter */}
       <section className="py-16 px-4 md:px-8 bg-steel-100">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-slate-800 mb-10">Utdanningsmuligheter</h2>
+          <h2 className="text-3xl font-bold text-slate-800 mb-10">{data.educationOpportunities.title}</h2>
 
           <Card className="shadow-md">
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold mb-4">Samarbeid med Hauge videregående skole</h3>
-              <p className="text-slate-700 mb-6">
-                Stiftelsen har samarbeidet med Hauge videregående skole i Haugesund området i mange år. Noen av våre
-                beboere har søkt seg inn der og fått tilrettelagt skole og videreutdanning. Skolen tar inn personer som
-                trenger tilrettelagt opplæring og gir muligheter for å fullføre videregående utdanning.
-              </p>
-              <p className="text-slate-700 mb-6">
-                Dette samarbeidet gir våre beboere mulighet til å bygge videre på sin utdanning og skape et godt
-                grunnlag for fremtiden. Utdanning kan være en viktig del av rehabiliteringsprosessen og bidra til økt
-                selvtillit og nye karrieremuligheter.
-              </p>
+              <div className="text-slate-700 mb-6 whitespace-pre-line">{data.educationOpportunities.content}</div>
               <Button asChild variant="outline" className="inline-flex items-center gap-2">
-                <a href="https://hauge-vgs.no/" target="_blank" rel="noopener noreferrer">
-                  Besøk Hauge videregående skole
+                <a href={data.educationOpportunities.linkUrl} target="_blank" rel="noopener noreferrer">
+                  {data.educationOpportunities.linkText}
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </Button>
@@ -287,7 +278,7 @@ export default function VartTilbud() {
 
             <div className="flex flex-col justify-center">
               <h3 className="text-xl font-semibold mb-4 text-slate-800">Se våre fasiliteter</h3>
-              <ImageGallery images={facilitiesImages} />
+              <ImageGallery images={data.facilities.images || facilitiesImages} />
             </div>
           </div>
         </div>
