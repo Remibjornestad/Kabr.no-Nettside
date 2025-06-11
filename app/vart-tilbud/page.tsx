@@ -195,6 +195,31 @@ export default function VartTilbud() {
         </div>
       </section>
 
+      {/* Fasiliteter */}
+      <section className="py-16 px-4 md:px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+            <div className="flex flex-col justify-center">
+              <h2 className="text-3xl font-bold text-slate-800 mb-6">{data.facilities.title}</h2>
+              <p className="text-slate-700 mb-6 whitespace-pre-line">{data.facilities.content}</p>
+              <ul className="space-y-3 text-slate-700">
+                {data.facilities.features.map((feature, index) => (
+                  <li key={index} className="flex items-start">
+                    <span className="text-steel-600 mr-2">•</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex flex-col justify-center">
+              <h3 className="text-xl font-semibold mb-4 text-slate-800">Se våre fasiliteter</h3>
+              <ImageGallery images={data.facilities.images || facilitiesImages} />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Hvordan vi jobber */}
       <section className="py-16 px-4 md:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
@@ -256,31 +281,6 @@ export default function VartTilbud() {
               </Button>
             </CardContent>
           </Card>
-        </div>
-      </section>
-
-      {/* Fasiliteter */}
-      <section className="py-16 px-4 md:px-8 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
-            <div className="flex flex-col justify-center">
-              <h2 className="text-3xl font-bold text-slate-800 mb-6">{data.facilities.title}</h2>
-              <p className="text-slate-700 mb-6 whitespace-pre-line">{data.facilities.content}</p>
-              <ul className="space-y-3 text-slate-700">
-                {data.facilities.features.map((feature, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-steel-600 mr-2">•</span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <h3 className="text-xl font-semibold mb-4 text-slate-800">Se våre fasiliteter</h3>
-              <ImageGallery images={data.facilities.images || facilitiesImages} />
-            </div>
-          </div>
         </div>
       </section>
 

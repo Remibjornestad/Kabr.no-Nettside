@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { MapPin, Phone, Mail } from "lucide-react"
+import { MapPin, Phone, Mail, Facebook } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -52,7 +52,19 @@ export default function Footer() {
 
               <div className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-sand-300" />
-                <span>Bjørnestad@kabr.no</span>
+                <span>Post@kabr.no</span>
+              </div>
+
+              <div className="flex items-center gap-2 mt-4">
+                <Facebook className="h-5 w-5 text-sand-300" />
+                <a
+                  href="https://www.facebook.com/abrbjornestad"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-sand-300 transition-colors"
+                >
+                  Følg oss på Facebook
+                </a>
               </div>
             </div>
           </div>

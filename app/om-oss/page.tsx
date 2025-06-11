@@ -153,7 +153,17 @@ export default function OmOss() {
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800">{person.name}</h3>
-                <p className="text-steel-600">{person.title}</p>
+                <p className="text-steel-600 mb-2">{person.title}</p>
+                {person.phone && (
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Tlf:</span> {person.phone}
+                  </p>
+                )}
+                {person.email && (
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">E-post:</span> {person.email}
+                  </p>
+                )}
               </article>
             ))}
           </div>
