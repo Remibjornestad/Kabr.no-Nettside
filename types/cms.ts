@@ -52,6 +52,10 @@ export interface CMSData {
   rehabilitationSections: RehabilitationSection[]
   howWeWork: {
     title: string
+    weeklySchedule: {
+      title: string
+      content: string
+    }
     sections: TextSection[]
   }
   facilities: {

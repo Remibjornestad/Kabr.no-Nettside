@@ -24,17 +24,36 @@ export default function Footer() {
               </div>
             </div>
             <p className="mb-4">Et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer.</p>
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin className="h-5 w-5 text-sand-300" />
-              <span>Sirdalsveien 2241, 4440 Tonstad</span>
-            </div>
-            <div className="flex items-center gap-2 mb-2">
-              <Phone className="h-5 w-5 text-sand-300" />
-              <span>924 21 020</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-sand-300" />
-              <span>Bjørnestad@kabr.no</span>
+            <div className="space-y-3">
+              <div>
+                <p className="font-semibold text-sand-300 mb-1">Besøksadresse:</p>
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-5 w-5 text-sand-300 mt-0.5 flex-shrink-0" />
+                  <span>Sirdalsveien 2741, 4440 Tonstad</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="font-semibold text-sand-300 mb-1">Post til oss:</p>
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-5 w-5 text-sand-300 mt-0.5 flex-shrink-0" />
+                  <span>
+                    Avd Bjørnestad
+                    <br />
+                    Postboks 44, 4441 Tonstad
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Phone className="h-5 w-5 text-sand-300" />
+                <span>924 21 020</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-sand-300" />
+                <span>Bjørnestad@kabr.no</span>
+              </div>
             </div>
           </div>
 

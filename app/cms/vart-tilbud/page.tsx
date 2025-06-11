@@ -280,6 +280,48 @@ export default function CMSVartTilbud() {
                 onChange={(value) => updateData({ howWeWork: { ...data.howWeWork, title: value } })}
               />
 
+              {/* Ukeplan seksjon - med fallback for eldre data */}
+              <div className="border border-gray-200 rounded-lg p-4 bg-blue-50">
+                <h3 className="font-medium mb-3">Fast ukeplan</h3>
+                <div className="space-y-3">
+                  <TextEditor
+                    title="Tittel"
+                    value={data.howWeWork.weeklySchedule?.title || "Fast ukeplan"}
+                    onChange={(value) =>
+                      updateData({
+                        howWeWork: {
+                          ...data.howWeWork,
+                          weeklySchedule: {
+                            ...data.howWeWork.weeklySchedule,
+                            title: value,
+                            content: data.howWeWork.weeklySchedule?.content || "",
+                          },
+                        },
+                      })
+                    }
+                  />
+                  <TextEditor
+                    title="Innhold"
+                    value={
+                      data.howWeWork.weeklySchedule?.content ||
+                      "Vi har fast ukeplan på avdelingen med oppsatte tider på morgenmøte/frokost, lunch, handleturer hver tirsdag, torsdag og lørdager, middag og aktiviteter. Faste medisintider gjennom dagen. Denne henges opp i fellesareal ved vaktrom.\n\nDenne strukturen gir forutsigbarhet og trygghet i hverdagen, samtidig som den hjelper med å etablere gode rutiner."
+                    }
+                    onChange={(value) =>
+                      updateData({
+                        howWeWork: {
+                          ...data.howWeWork,
+                          weeklySchedule: {
+                            title: data.howWeWork.weeklySchedule?.title || "Fast ukeplan",
+                            content: value,
+                          },
+                        },
+                      })
+                    }
+                    multiline
+                  />
+                </div>
+              </div>
+
               {data.howWeWork.sections.map((section, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-4">

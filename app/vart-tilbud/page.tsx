@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { ExternalLink } from "lucide-react"
+import ImageGallery from "@/components/image-gallery"
 import SEOHead from "@/components/seo-head"
 import Breadcrumbs from "@/components/breadcrumbs"
 import StructuredData from "@/components/structured-data"
@@ -11,6 +13,40 @@ import { useCMSData } from "@/hooks/use-cms-data"
 
 export default function VartTilbud() {
   const { data, loading, error } = useCMSData()
+
+  // Bilder for fasiliteter galleri
+  const facilitiesImages = [
+    {
+      id: "1",
+      src: "https://i.ibb.co/6cgzsfRS/IMG-0008-1.jpg",
+      alt: "Nybygg - 10 egne rom, felles stue/kjøkken og aktivitetsrom",
+    },
+    {
+      id: "2",
+      src: "/placeholder-image.png",
+      alt: "Gamle bygg - 8 egne rom, felles stue og matsal",
+    },
+    {
+      id: "3",
+      src: "/placeholder-image.png",
+      alt: "Treningsrom - Moderne utstyr for styrke- og kondisjonstrening",
+    },
+    {
+      id: "4",
+      src: "/placeholder-image.png",
+      alt: "Fellesområder - Koselige oppholdsrom og TV-stue",
+    },
+    {
+      id: "5",
+      src: "/placeholder-image.png",
+      alt: "Matsal - Plass for fellesskap og måltider",
+    },
+    {
+      id: "6",
+      src: "/placeholder-image.png",
+      alt: "Uteområder - Naturskjønne omgivelser for aktiviteter",
+    },
+  ]
 
   if (loading) {
     return (
@@ -164,6 +200,32 @@ export default function VartTilbud() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-slate-800 mb-10">{data.howWeWork.title}</h2>
 
+          <p className="text-lg text-slate-700 mb-8">
+            Vi har 3 vaktlag med 3 personer som rullerer hver 14 dag (medleverturnus). Det betyr at du alltid har en
+            fast kontaktperson gjennom oppholdet ditt.
+          </p>
+
+          {/* Ukeplan seksjon - med fallback for eldre data */}
+          {data.howWeWork.weeklySchedule ? (
+            <div className="bg-steel-50 p-6 rounded-lg mb-8 border border-steel-200">
+              <h3 className="text-xl font-semibold mb-3">{data.howWeWork.weeklySchedule.title}</h3>
+              <div className="text-slate-700 whitespace-pre-line">{data.howWeWork.weeklySchedule.content}</div>
+            </div>
+          ) : (
+            <div className="bg-steel-50 p-6 rounded-lg mb-8 border border-steel-200">
+              <h3 className="text-xl font-semibold mb-3">Fast ukeplan</h3>
+              <p className="text-slate-700 mb-4">
+                Vi har fast ukeplan på avdelingen med oppsatte tider på morgenmøte/frokost, lunch, handleturer hver
+                tirsdag, torsdag og lørdager, middag og aktiviteter. Faste medisintider gjennom dagen. Denne henges opp
+                i fellesareal ved vaktrom.
+              </p>
+              <p className="text-slate-700">
+                Denne strukturen gir forutsigbarhet og trygghet i hverdagen, samtidig som den hjelper med å etablere
+                gode rutiner.
+              </p>
+            </div>
+          )}
+
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {data.howWeWork.sections.map((section, index) => (
               <Card key={index} className="shadow-md">
@@ -177,14 +239,42 @@ export default function VartTilbud() {
         </div>
       </section>
 
-      {/* Fasiliteter */}
+      {/* Utdanningsmuligheter */}
       <section className="py-16 px-4 md:px-8 bg-steel-100">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-slate-800 mb-10">{data.facilities.title}</h2>
+          <h2 className="text-3xl font-bold text-slate-800 mb-10">Utdanningsmuligheter</h2>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="text-slate-700 mb-4 whitespace-pre-line">{data.facilities.content}</p>
+          <Card className="shadow-md">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-semibold mb-4">Samarbeid med Hauge videregående skole</h3>
+              <p className="text-slate-700 mb-6">
+                Stiftelsen har samarbeidet med Hauge videregående skole i Haugesund området i mange år. Noen av våre
+                beboere har søkt seg inn der og fått tilrettelagt skole og videreutdanning. Skolen tar inn personer som
+                trenger tilrettelagt opplæring og gir muligheter for å fullføre videregående utdanning.
+              </p>
+              <p className="text-slate-700 mb-6">
+                Dette samarbeidet gir våre beboere mulighet til å bygge videre på sin utdanning og skape et godt
+                grunnlag for fremtiden. Utdanning kan være en viktig del av rehabiliteringsprosessen og bidra til økt
+                selvtillit og nye karrieremuligheter.
+              </p>
+              <Button asChild variant="outline" className="inline-flex items-center gap-2">
+                <a href="https://hauge-vgs.no/" target="_blank" rel="noopener noreferrer">
+                  Besøk Hauge videregående skole
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Fasiliteter */}
+      <section className="py-16 px-4 md:px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+            <div className="flex flex-col justify-center">
+              <h2 className="text-3xl font-bold text-slate-800 mb-6">{data.facilities.title}</h2>
+              <p className="text-slate-700 mb-6 whitespace-pre-line">{data.facilities.content}</p>
               <ul className="space-y-3 text-slate-700">
                 {data.facilities.features.map((feature, index) => (
                   <li key={index} className="flex items-start">
@@ -194,24 +284,21 @@ export default function VartTilbud() {
                 ))}
               </ul>
             </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden shadow-md">
-              <Image
-                src={data.facilities.image || "/placeholder.svg"}
-                alt={data.facilities.imageAlt || "Fasiliteter ved Karmsund ABR Bjørnestad"}
-                fill
-                className="object-cover"
-              />
+
+            <div className="flex flex-col justify-center">
+              <h3 className="text-xl font-semibold mb-4 text-slate-800">Se våre fasiliteter</h3>
+              <ImageGallery images={facilitiesImages} />
             </div>
           </div>
         </div>
       </section>
 
       {/* Henvisning og inntak */}
-      <section className="py-16 px-4 md:px-8 bg-white">
+      <section className="py-16 px-4 md:px-8 bg-steel-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-slate-800 mb-10">{data.referralAndAdmission.title}</h2>
 
-          <div className="bg-steel-100 p-8 rounded-lg mb-8">
+          <div className="bg-white p-8 rounded-lg mb-8">
             <div className="text-slate-700 mb-4 whitespace-pre-line">{data.referralAndAdmission.content}</div>
           </div>
 

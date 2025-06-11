@@ -56,10 +56,11 @@ export async function getCMSData(): Promise<CMSData> {
           Object.assign(combinedData, item.data)
         })
 
-        return { ...getDefaultCMSData(), ...combinedData } as CMSData
+        // Merge with default data to ensure all properties exist
+        return mergeWithDefaults(combinedData)
       } else if ("data" in firstRow) {
         // Alternative: all CMS data is in a single row
-        return { ...getDefaultCMSData(), ...firstRow.data } as CMSData
+        return mergeWithDefaults(firstRow.data)
       } else {
         // Data might be stored directly in the row
         const defaultData = getDefaultCMSData()
@@ -72,7 +73,7 @@ export async function getCMSData(): Promise<CMSData> {
           }
         })
 
-        return combinedData
+        return mergeWithDefaults(combinedData)
       }
     }
 
@@ -81,6 +82,28 @@ export async function getCMSData(): Promise<CMSData> {
     console.error("Error in getCMSData:", error)
     return getDefaultCMSData()
   }
+}
+
+// Helper function to merge loaded data with defaults to ensure all properties exist
+function mergeWithDefaults(loadedData: any): CMSData {
+  const defaultData = getDefaultCMSData()
+
+  // Deep merge function to ensure nested objects are properly merged
+  function deepMerge(target: any, source: any): any {
+    const result = { ...target }
+
+    for (const key in source) {
+      if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
+        result[key] = deepMerge(target[key] || {}, source[key])
+      } else {
+        result[key] = source[key]
+      }
+    }
+
+    return result
+  }
+
+  return deepMerge(defaultData, loadedData || {}) as CMSData
 }
 
 export async function saveCMSSection(section: string, sectionData: any, oldData?: any): Promise<boolean> {
@@ -359,6 +382,8 @@ function getDefaultCMSData(): CMSData {
       title: "Om Karmsund ABR",
       content:
         "Karmsund ABR er en privat stiftelse med ideelt formål. Siden 1990 har vi gitt mennesker med rusavhengighet et trygt og støttende tilbud, med fokus på omsorg og rehabilitering.\n\nVår avdeling Bjørnestad ligger i naturskjønne omgivelser på grensen mellom Agder og Rogaland, på Sirdal, Tonstad. Her møter du et team av dedikerte fagpersoner med lang erfaring innen rus og psykisk helse, som er her for å støtte deg på din vei.",
+      image: "https://i.ibb.co/8g5F0Qf8/488622915-1135529365253755-4122780821380544378-n.jpg",
+      imageAlt: "Karmsund ABR Bjørnestad - våre fasiliteter",
     },
     ourOffer: {
       title: "Vårt tilbud",
@@ -383,7 +408,6 @@ function getDefaultCMSData(): CMSData {
       content:
         "Ta kontakt med oss for en uforpliktende samtale om hvordan vi kan hjelpe deg eller noen du bryr deg om. Vi er her for å svare på spørsmål og veilede deg gjennom innsøkingsprosessen.",
     },
-    // Resten av default data...
     offerHero: {
       title: "Vårt tilbud",
       subtitle: "",
@@ -417,6 +441,11 @@ function getDefaultCMSData(): CMSData {
     ],
     howWeWork: {
       title: "Hvordan vi jobber",
+      weeklySchedule: {
+        title: "Fast ukeplan",
+        content:
+          "Vi har fast ukeplan på avdelingen med oppsatte tider på morgenmøte/frokost, lunch, handleturer hver tirsdag, torsdag og lørdager, middag og aktiviteter. Faste medisintider gjennom dagen. Denne henges opp i fellesareal ved vaktrom.\n\nDenne strukturen gir forutsigbarhet og trygghet i hverdagen, samtidig som den hjelper med å etablere gode rutiner.",
+      },
       sections: [
         {
           title: "Individuelle planer og mål",
