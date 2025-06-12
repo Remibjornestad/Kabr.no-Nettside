@@ -227,7 +227,8 @@ export default function VartTilbud() {
 
           <p className="text-lg text-slate-700 mb-8">
             Vi har 3 vaktlag med 3 personer som rullerer hver 14 dag (medleverturnus). Det betyr at du alltid har en
-            fast kontaktperson gjennom oppholdet ditt.
+            fast kontaktperson gjennom oppholdet ditt. I tillegg har vi en administrasjon bestående av daglig leder og
+            annen administrativt personell.
           </p>
 
           {/* Ukeplan seksjon - med fallback for eldre data */}
