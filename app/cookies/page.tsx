@@ -2,7 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Cookie-policy - Informasjonskapsler på Karmsund ABR Nettside",
+  title: "Cookie-policy - Kabr.no",
   description:
     "Informasjon om hvordan Karmsund ABR bruker cookies på våre nettsider. Lær om nødvendige, funksjonelle og statistikk-cookies, og hvordan du kan administrere dem.",
   keywords: "cookies Karmsund ABR, informasjonskapsler, cookie policy, nettside cookies, administrere cookies",
