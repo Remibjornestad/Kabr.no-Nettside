@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Karmsund ABR" }],
   creator: "Karmsund ABR",
   publisher: "Karmsund ABR",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   openGraph: {
     type: "website",
     locale: "nb_NO",
@@ -54,7 +59,7 @@ export const metadata: Metadata = {
 // Disse bildene vil bli forhåndslastet
 export const preloadImages = [
   "https://i.ibb.co/dw6Zr26V/IMG-0005-2.jpg",
-  "https://i.ibb.co/8g5F0Qf8/488622915-1135529365253755-4122780821380544378-n.jpg",
+  "/images/hero/main-building.webp",
   "/karmsund-abr-logo.png",
 ]
 
@@ -70,6 +75,11 @@ export default function RootLayout({
         {preloadImages.map((src, index) => (
           <link key={index} rel="preload" href={src} as="image" />
         ))}
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
