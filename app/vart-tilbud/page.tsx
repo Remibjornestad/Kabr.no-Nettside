@@ -1,24 +1,39 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { generateSEO, generateServiceSchema } from "@/lib/seo-utils"
+import StructuredData from "@/components/seo/structured-data"
+import Breadcrumbs from "@/components/seo/breadcrumbs"
 import type { Metadata } from "next"
 import ImageGallery from "@/components/image-gallery"
 
-export const metadata: Metadata = {
-  title: "Vårt tilbud | Karmsund ABR - Bjørnestad",
+export const metadata: Metadata = generateSEO({
+  title: "Vårt tilbud - Rusrehabilitering og psykisk helse",
   description:
-    "Karmsund ABR avdeling Bjørnestad tilbyr et helhetlig rehabiliteringstilbud for mennesker med rus og psykiske helseutfordringer, inkludert LAR og ADHD-relaterte utfordringer.",
-  keywords: "rusrehabilitering, psykisk helse, LAR, ADHD, omsorgstilbud, Bjørnestad, Karmsund ABR",
-  openGraph: {
-    title: "Vårt tilbud | Karmsund ABR - Bjørnestad",
-    description: "Et helhetlig rehabiliteringstilbud for deg som lever med rus og psykiske helseutfordringer",
-    url: "https://www.kabr.no/vart-tilbud",
-  },
-}
+    "Karmsund ABR avdeling Bjørnestad tilbyr et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer, inkludert LAR og ADHD-relaterte utfordringer.",
+  keywords: [
+    "rusrehabilitering",
+    "psykisk helse",
+    "LAR",
+    "ADHD",
+    "omsorgstilbud",
+    "miljøterapi",
+    "recoveryorientert",
+    "tverrfaglig",
+  ],
+  url: "https://www.kabr.no/vart-tilbud",
+})
+
+const breadcrumbItems = [{ name: "Vårt tilbud", url: "/vart-tilbud", current: true }]
 
 export default function VartTilbud() {
+  const serviceSchema = generateServiceSchema()
+
   return (
     <div className="flex flex-col w-full">
+      <StructuredData data={serviceSchema} />
+      <Breadcrumbs items={breadcrumbItems} />
+
       {/* Hero Section */}
       <section className="relative w-full h-[40vh] min-h-[300px]">
         <Image
@@ -58,7 +73,7 @@ export default function VartTilbud() {
           <h2 className="text-3xl font-bold text-slate-800 mb-10">Vårt rehabiliteringstilbud</h2>
 
           <div className="space-y-12">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <article className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Rusmestring og psykisk helse</h3>
                 <p className="text-slate-700 mb-4">
@@ -66,7 +81,6 @@ export default function VartTilbud() {
                   Du får veiledning og støtte tilpasset dine behov, og vi hjelper deg med videre oppfølging utenfor
                   institusjonen ved behov. Vi tilbyr også akupunktur til de som ønsker dette.
                 </p>
-                <p className="text-slate-700"></p>
               </div>
               <div className="relative h-[300px] rounded-lg overflow-hidden shadow-md">
                 <Image
@@ -74,17 +88,19 @@ export default function VartTilbud() {
                   alt="Mindfulness og mental helse - yoga ved havet"
                   fill
                   className="object-cover"
+                  loading="lazy"
                 />
               </div>
-            </div>
+            </article>
 
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <article className="grid md:grid-cols-2 gap-8 items-center">
               <div className="order-2 md:order-1 relative h-[300px] rounded-lg overflow-hidden shadow-md">
                 <Image
                   src="/images/services/gym-equipment.webp"
                   alt="Treningsrom med moderne utstyr"
                   fill
                   className="object-cover"
+                  loading="lazy"
                 />
               </div>
               <div className="order-1 md:order-2">
@@ -94,11 +110,10 @@ export default function VartTilbud() {
                   klatring, svømming, fjellturer og eget treningsrom til disposisjon. Om vinteren har vi langrennsløyper
                   og slalombakke like i nærheten.
                 </p>
-                <p className="text-slate-700"></p>
               </div>
-            </div>
+            </article>
 
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <article className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Arbeidstrening og ADL</h3>
                 <p className="text-slate-700 mb-4">
@@ -107,7 +122,6 @@ export default function VartTilbud() {
                   arbeid og ferdighetsutvikling. Alle beboere får ukentlige arbeidsoppgaver som rullerer fast for best
                   mulig variasjon.
                 </p>
-                <p className="text-slate-700"></p>
               </div>
               <div className="relative h-[300px] rounded-lg overflow-hidden shadow-md">
                 <Image
@@ -115,17 +129,19 @@ export default function VartTilbud() {
                   alt="Snekring og håndverk - trekiste"
                   fill
                   className="object-cover"
+                  loading="lazy"
                 />
               </div>
-            </div>
+            </article>
 
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <article className="grid md:grid-cols-2 gap-8 items-center">
               <div className="order-2 md:order-1 relative h-[300px] rounded-lg overflow-hidden shadow-md">
                 <Image
                   src="/images/services/buffet-food.webp"
                   alt="Buffetbord med variert og sunn mat"
                   fill
                   className="object-cover"
+                  loading="lazy"
                 />
               </div>
               <div className="order-1 md:order-2">
@@ -135,10 +151,8 @@ export default function VartTilbud() {
                   med morgenmøte, lunsj kl. 12.00 og middag kl. 15.30. I helgene koser vi oss gjerne med favoritter som
                   taco og pizza.
                 </p>
-                <p className="text-slate-700 mb-4"></p>
-                <p className="text-slate-700"></p>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>

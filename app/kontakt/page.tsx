@@ -109,7 +109,9 @@ export default function Kontakt() {
                   <MapPin className="h-6 w-6 text-steel-600 mr-4 mt-1" />
                   <div>
                     <h4 className="text-lg font-semibold">Besøksadresse</h4>
-                    <p className="text-slate-700">Sirdalsveien 2444, 4440 Tonstad - All post sendes til: Postboks 44, 4441 Tonstad</p>
+                    <p className="text-slate-700">
+                      Sirdalsveien 2444, 4440 Tonstad - All post sendes til: Postboks 44, 4441 Tonstad
+                    </p>
                   </div>
                 </div>
 
@@ -147,19 +149,17 @@ export default function Kontakt() {
               <h3 className="text-xl font-semibold mb-6 pb-2 border-b border-steel-200">Finn veien til oss</h3>
               <div className="relative h-[300px] rounded-lg overflow-hidden mb-4 border border-steel-200">
                 <iframe
-                  src="https://www.google.com/maps?hl=no&gl=no&um=1&ie=UTF-8&fb=1&sa=X&ftid=0x463993ef25cc9de1:0xbb33232d98e04922"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2075.8412406788384!2d6.5466036999999995!3d58.648652600000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x463993ef25cc9de1%3A0xbb33232d98e04922!2sABR%20Bj%C3%B8rnestad!5e0!3m2!1sno!2sno!4v1750070620747!5m2!1sno!2sno"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Kart til Karmsund ABR Bjørnestad"
+                  title="Kart til ABR Bjørnestad"
                 ></iframe>
               </div>
-              <p className="text-slate-700">
-                
-              </p>
+              <p className="text-slate-700"></p>
             </div>
           </div>
         </div>

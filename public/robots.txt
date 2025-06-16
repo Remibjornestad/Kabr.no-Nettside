@@ -1,4 +1,31 @@
+# Robots.txt for Karmsund ABR - Bjørnestad
 User-agent: *
 Allow: /
 
+# Spesifikke regler for søkemotorer
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Blokkér tilgang til admin og private områder
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /api/
+
+# Tillat tilgang til viktige ressurser
+Allow: /images/
+Allow: /favicon.ico
+Allow: /*.css
+Allow: /*.js
+
+# Sitemap lokasjon
 Sitemap: https://www.kabr.no/sitemap.xml
+Sitemap: https://www.kabr.no/sitemap-images.xml
+
+# Host informasjon
+Host: https://www.kabr.no
