@@ -8,18 +8,20 @@ import type { Metadata } from "next"
 import ImageGallery from "@/components/image-gallery"
 
 export const metadata: Metadata = generateSEO({
-  title: "Vårt tilbud - Rusrehabilitering og psykisk helse",
+  title: "Vårt Tilbud - LAR, ROP og Rusrehabilitering | Karmsund ABR",
   description:
-    "Karmsund ABR avdeling Bjørnestad tilbyr et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer, inkludert LAR og ADHD-relaterte utfordringer.",
+    "Helhetlig rehabilitering for rus og psykisk helse. LAR-oppfølging, ADHD-støtte, arbeidstrening, fysisk aktivitet og individuell oppfølging. Ledig kapasitet - kontakt oss i dag.",
   keywords: [
+    "LAR oppfølging",
+    "ROP behandling",
     "rusrehabilitering",
-    "psykisk helse",
-    "LAR",
-    "ADHD",
-    "omsorgstilbud",
+    "ADHD støtte",
+    "arbeidstrening",
     "miljøterapi",
     "recoveryorientert",
     "tverrfaglig",
+    "benzodiazepin",
+    "opiatavhengighet",
   ],
   url: "https://www.kabr.no/vart-tilbud",
 })

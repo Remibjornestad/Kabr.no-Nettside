@@ -3,13 +3,14 @@ import OptimizedImage from "@/components/optimized-image"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Kontakt oss | Karmsund ABR - Bjørnestad",
+  title: "Kontakt Karmsund ABR - Ring 924 21 020 for Inntak og Info",
   description:
-    "Ta kontakt med Karmsund ABR avdeling Bjørnestad for mer informasjon om vårt omsorgstilbud for mennesker med rus og psykiske helseutfordringer.",
-  keywords: "kontakt, Karmsund ABR, Bjørnestad, rusrehabilitering, psykisk helse, omsorgstilbud, Tonstad, Sirdal",
+    "Kontakt oss for inntak og informasjon. Tlf: 924 21 020 (inntak) eller 971 48 305 (daglig leder). Besøksadresse: Sirdalsveien 2444, Tonstad. Ledig kapasitet.",
+  keywords:
+    "kontakt Karmsund ABR, inntak rusrehabilitering, telefon 924 21 020, Bjørnestad adresse, Tonstad, henvisning",
   openGraph: {
-    title: "Kontakt oss | Karmsund ABR - Bjørnestad",
-    description: "Vi er her for å hjelpe deg med spørsmål om vårt tilbud",
+    title: "Kontakt Karmsund ABR - Ring 924 21 020 for Inntak",
+    description: "Kontakt oss for inntak og informasjon. Ledig kapasitet for rusrehabilitering på Bjørnestad.",
     url: "https://www.kabr.no/kontakt",
   },
 }

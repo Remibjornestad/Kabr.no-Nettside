@@ -3,9 +3,9 @@ import { generateSEO } from "@/lib/seo-utils"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = generateSEO({
-  title: "Karmsund ABR - Bjørnestad | Omsorgstilbud for rus og psykisk helse",
+  title: "Karmsund ABR Bjørnestad - Rusrehabilitering og Omsorg i Sirdal",
   description:
-    "Karmsund ABR avdeling Bjørnestad tilbyr et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer i trygge omgivelser på Tonstad, Sirdal.",
+    "Profesjonell rusrehabilitering og psykisk helse på Bjørnestad, Tonstad. LAR-oppfølging, miljøterapi og individuell omsorg siden 1991. Ring 924 21 020 for inntak.",
   keywords: [
     "rusrehabilitering",
     "psykisk helse",

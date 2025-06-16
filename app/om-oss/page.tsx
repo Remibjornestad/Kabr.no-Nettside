@@ -4,13 +4,14 @@ import OptimizedImage from "@/components/optimized-image"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Om oss | Karmsund ABR - Bjørnestad",
+  title: "Om Karmsund ABR - 30+ År med Rusrehabilitering i Sirdal",
   description:
-    "Karmsund ABR er en privat stiftelse med ideelt formål som siden 1990 har gitt mennesker med rusavhengighet et trygt og støttende tilbud.",
-  keywords: "Karmsund ABR, Bjørnestad, rusrehabilitering, psykisk helse, omsorgstilbud, Tonstad, Sirdal, stiftelse",
+    "Siden 1991 har vi hjulpet mennesker med rusavhengighet. Møt vårt erfarne team av sykepleiere, sosionomer og miljøterapeuter på Bjørnestad, Tonstad.",
+  keywords:
+    "Karmsund ABR historie, erfaring rusrehabilitering, tverrfaglig team, Bjørnestad personale, Gunn Marie Matnisdal, stiftelse 1991",
   openGraph: {
-    title: "Om oss | Karmsund ABR - Bjørnestad",
-    description: "Bli kjent med Karmsund ABR, vår historie, våre verdier og vårt dedikerte team",
+    title: "Om Karmsund ABR - 30+ År med Rusrehabilitering i Sirdal",
+    description: "Siden 1991 har vi hjulpet mennesker med rusavhengighet. Møt vårt erfarne team på Bjørnestad.",
     url: "https://www.kabr.no/om-oss",
   },
 }
@@ -46,7 +47,8 @@ export default function OmOss() {
               <h2 className="text-3xl font-bold text-slate-800 mb-6">Om Karmsund ABR</h2>
               <p className="text-lg text-slate-700 mb-4">
                 Karmsund ABR er en privat stiftelse med ideelt formål. Siden 1991 har vi gitt mennesker med
-                rusavhengighet et trygt og støttende tilbud, først som både TSB-enhet og egne omsorgsinstitusjoner. TSB-avdelingen ble avsluttet etter anbudskonkurranser vi ikke nådde opp til i 2021.
+                rusavhengighet et trygt og støttende tilbud, først som både TSB-enhet og egne omsorgsinstitusjoner.
+                TSB-avdelingen ble avsluttet etter anbudskonkurranser vi ikke nådde opp til i 2021.
               </p>
               <p className="text-lg text-slate-700 mb-4">
                 Bjørnestad ligger nå på grensen mellom Agder og Rogaland, i naturskjønne omgivelser på Sirdal, Tonstad.
