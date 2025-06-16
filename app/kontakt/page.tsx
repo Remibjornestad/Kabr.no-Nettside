@@ -3,9 +3,9 @@ import OptimizedImage from "@/components/optimized-image"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Kontakt Karmsund ABR - Ring 924 21 020 for Inntak og Info",
+  title: "Kontakt oss - Kabr.no",
   description:
-    "Kontakt oss for inntak og informasjon. Tlf: 924 21 020 (inntak) eller 971 48 305 (daglig leder). Besøksadresse: Sirdalsveien 2444, Tonstad. Ledig kapasitet.",
+    "Ta gjerne kontakt med oss for mer informasjon om vårt tilbud eller for å avtale et besøk. Vi er tilgjengelige for å svare på dine spørsmål og hjelpe deg med innsøkingsprosessen.",
   keywords:
     "kontakt Karmsund ABR, inntak rusrehabilitering, telefon 924 21 020, Bjørnestad adresse, Tonstad, henvisning",
   openGraph: {
