@@ -4,7 +4,7 @@ import OptimizedImage from "@/components/optimized-image"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Om Karmsund ABR - 30+ År med Rusrehabilitering i Sirdal",
+  title: "Om Karmsund ABR - Kabr.no",
   description:
     "Siden 1991 har vi hjulpet mennesker med rusavhengighet. Møt vårt erfarne team av sykepleiere, sosionomer og miljøterapeuter på Bjørnestad, Tonstad.",
   keywords:
