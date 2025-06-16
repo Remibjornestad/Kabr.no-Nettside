@@ -56,6 +56,9 @@ export default function RootLayout({
   return (
     <html lang="nb" suppressHydrationWarning>
       <head>
+        {/* Google Search Console Verification - REPLACE WITH YOUR ACTUAL CODE */}
+        <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
+
         {/* DNS Prefetch for eksterne ressurser */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
