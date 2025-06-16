@@ -2,7 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Personvernerklæring - Hvordan Karmsund ABR Behandler Dine Data",
+  title: "Personvernerklæring - Kabr.no",
   description:
     "Les om hvordan Karmsund ABR behandler personopplysninger på våre nettsider. GDPR-kompatibel personvernerklæring med informasjon om cookies og dine rettigheter.",
   keywords: "personvern Karmsund ABR, GDPR, personopplysninger, cookies policy, databehandling, personvernrettigheter",
