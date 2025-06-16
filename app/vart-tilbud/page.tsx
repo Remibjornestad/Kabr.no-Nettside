@@ -8,7 +8,7 @@ import type { Metadata } from "next"
 import ImageGallery from "@/components/image-gallery"
 
 export const metadata: Metadata = generateSEO({
-  title: "Vårt Tilbud - LAR, ROP og Rusrehabilitering | Karmsund ABR",
+  title: "Vårt tilbud - LAR, ROP og rusrehabilitering | Karmsund ABR",
   description:
     "Helhetlig rehabilitering for rus og psykisk helse. LAR-oppfølging, ADHD-støtte, arbeidstrening, fysisk aktivitet og individuell oppfølging. Ledig kapasitet - kontakt oss i dag.",
   keywords: [
