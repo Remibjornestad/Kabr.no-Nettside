@@ -4,59 +4,38 @@ import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import OptimizedImage from "@/components/optimized-image"
-import type { ImageGalleryItem } from "@/types/cms"
 
-interface ImageGalleryProps {
-  images?: ImageGalleryItem[]
-}
+// Bildene som skal vises i galleriet - fasiliteter ved Bjørnestad
+const images = [
+  {
+    src: "/images/facilities/common-area.webp",
+    alt: "Fellesområde med komfortable sofaer og peis",
+  },
+  {
+    src: "/images/facilities/gym.webp",
+    alt: "Moderne treningsrom med komplett utstyr",
+  },
+  {
+    src: "/images/facilities/bedroom.webp",
+    alt: "Komfortabelt soverom med utsikt til naturen",
+  },
+  {
+    src: "/images/facilities/bathroom.webp",
+    alt: "Moderne bad med tilgjengelig dusj",
+  },
+]
 
-export default function ImageGallery({ images }: ImageGalleryProps) {
+export default function ImageGallery() {
   const [currentIndex, setCurrentIndex] = useState(0)
-
-  // Fallback til standard bilder hvis ingen bilder er oppgitt
-  const defaultImages = [
-    {
-      id: "1",
-      src: "/placeholder-image.png",
-      alt: "Bjørnestad bygning",
-    },
-    {
-      id: "2",
-      src: "/placeholder-image.png",
-      alt: "Aktiviteter i naturen",
-    },
-    {
-      id: "3",
-      src: "/placeholder-image.png",
-      alt: "Fellesområde",
-    },
-    {
-      id: "4",
-      src: "/placeholder-image.png",
-      alt: "Matsal",
-    },
-    {
-      id: "5",
-      src: "/placeholder-image.png",
-      alt: "Soverom",
-    },
-    {
-      id: "6",
-      src: "/placeholder-image.png",
-      alt: "Treningsrom",
-    },
-  ]
-
-  const galleryImages = images && images.length > 0 ? images : defaultImages
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0
-    const newIndex = isFirstSlide ? galleryImages.length - 1 : currentIndex - 1
+    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1
     setCurrentIndex(newIndex)
   }
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === galleryImages.length - 1
+    const isLastSlide = currentIndex === images.length - 1
     const newIndex = isLastSlide ? 0 : currentIndex + 1
     setCurrentIndex(newIndex)
   }
@@ -69,11 +48,12 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
     <div className="relative w-full h-[500px] group">
       <div className="relative h-full w-full rounded-lg overflow-hidden">
         <OptimizedImage
-          src={galleryImages[currentIndex].src || "/placeholder.svg"}
-          alt={galleryImages[currentIndex].alt}
+          src={images[currentIndex].src || "/placeholder.svg"}
+          alt={images[currentIndex].alt}
           fill
           className="object-cover transition-all duration-500"
           sizes="(max-width: 768px) 100vw, 1200px"
+          priority={currentIndex === 0}
         />
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
@@ -102,7 +82,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Indicators */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-        {galleryImages.map((_, slideIndex) => (
+        {images.map((_, slideIndex) => (
           <button
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
