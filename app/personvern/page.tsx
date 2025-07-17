@@ -2,13 +2,13 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Personvernerklæring | Karmsund ABR - Bjørnestad",
+  title: "Personvernerklæring - Kabr.no",
   description:
-    "Personvernerklæring for Karmsund ABR avdeling Bjørnestad. Informasjon om hvordan vi behandler personopplysninger.",
-  keywords: "personvern, GDPR, personopplysninger, Karmsund ABR, Bjørnestad",
+    "Les om hvordan Karmsund ABR behandler personopplysninger på våre nettsider. GDPR-kompatibel personvernerklæring med informasjon om cookies og dine rettigheter.",
+  keywords: "personvern Karmsund ABR, GDPR, personopplysninger, cookies policy, databehandling, personvernrettigheter",
   openGraph: {
-    title: "Personvernerklæring | Karmsund ABR - Bjørnestad",
-    description: "Informasjon om hvordan vi behandler personopplysninger",
+    title: "Personvernerklæring - Karmsund ABR Bjørnestad",
+    description: "Informasjon om hvordan vi behandler personopplysninger i henhold til GDPR",
     url: "https://www.kabr.no/personvern",
   },
 }

@@ -1,0 +1,26 @@
+{
+  "name": "Karmsund ABR - Bjørnestad",
+  "short_name": "Karmsund ABR",
+  "description": "Et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#64748b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/karmsund-abr-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical", "lifestyle"],
+  "lang": "nb-NO",
+  "dir": "ltr"
+}

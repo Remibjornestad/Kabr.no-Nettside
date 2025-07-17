@@ -6,9 +6,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-steel-500 text-white">
+    <footer className="bg-slate-500 text-white">
       <div className="container mx-auto py-12 px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Left Column - Logo and Contact Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
@@ -20,109 +21,126 @@ export default function Footer() {
               />
               <div className="flex flex-col">
                 <span className="text-lg font-bold leading-tight">Karmsund ABR</span>
-                <span className="text-xs leading-tight">avdeling Bjørnestad</span>
+                <span className="text-sm leading-tight">avdeling Bjørnestad</span>
               </div>
             </div>
-            <p className="mb-4">Et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer.</p>
+            <p className="mb-6 text-sm">
+              Et helhetlig omsorgstilbud for mennesker med rus og psykiske helseutfordringer.
+            </p>
+
             <div className="space-y-3">
               <div>
-                <p className="font-semibold text-sand-300 mb-1">Besøksadresse:</p>
+                <p className="font-semibold mb-1">Besøksadresse:</p>
                 <div className="flex items-start gap-2">
-                  <MapPin className="h-5 w-5 text-sand-300 mt-0.5 flex-shrink-0" />
-                  <span>Sirdalsveien 2741, 4440 Tonstad</span>
+                  <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">Sirdalsveien 2741, 4440 Tonstad</span>
                 </div>
               </div>
 
               <div>
-                <p className="font-semibold text-sand-300 mb-1">Post til oss:</p>
+                <p className="font-semibold mb-1">Post til oss:</p>
                 <div className="flex items-start gap-2">
-                  <MapPin className="h-5 w-5 text-sand-300 mt-0.5 flex-shrink-0" />
-                  <span>
-                    Avd Bjørnestad
-                    <br />
-                    Postboks 44, 4441 Tonstad
-                  </span>
+                  <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm">
+                    <div>Avd Bjørnestad</div>
+                    <div>Postboks 44, 4441 Tonstad</div>
+                  </div>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
-                <Phone className="h-5 w-5 text-sand-300" />
-                <span>924 21 020</span>
+                <Phone className="h-4 w-4" />
+                <span className="text-sm">924 21 020</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-sand-300" />
-                <span>Post@kabr.no</span>
+                <Mail className="h-4 w-4" />
+                <span className="text-sm">Post@kabr.no</span>
               </div>
 
-              <div className="flex items-center gap-2 mt-4">
-                <Facebook className="h-5 w-5 text-sand-300" />
-                <a
-                  href="https://www.facebook.com/abrbjornestad"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-sand-300 transition-colors"
-                >
-                  Følg oss på Facebook
-                </a>
-              </div>
+              <Link
+                href="https://www.facebook.com/abrbjornestad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-gray-300 transition-colors"
+              >
+                <Facebook className="h-4 w-4" />
+                <span className="text-sm">Følg oss på Facebook</span>
+              </Link>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-400">
+              <p className="text-sm">
+                <span className="font-semibold">Organisasjonsnummer:</span> 961 664 837
+              </p>
             </div>
           </div>
 
+          {/* Middle Column - Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white">Lenker</h3>
-            <ul className="space-y-2">
+            <h3 className="text-xl font-bold mb-6 text-white">Lenker</h3>
+            <ul className="space-y-3">
               <li>
-                <Link href="/" className="hover:text-sand-300 transition-colors">
+                <Link href="/" className="text-sm hover:text-gray-300 transition-colors">
                   Hjem
                 </Link>
               </li>
               <li>
-                <Link href="/vart-tilbud" className="hover:text-sand-300 transition-colors">
+                <Link href="/vart-tilbud" className="text-sm hover:text-gray-300 transition-colors">
                   Vårt tilbud
                 </Link>
               </li>
               <li>
-                <Link href="/om-oss" className="hover:text-sand-300 transition-colors">
+                <Link href="/om-oss" className="text-sm hover:text-gray-300 transition-colors">
                   Om oss
                 </Link>
               </li>
               <li>
-                <Link href="/kontakt" className="hover:text-sand-300 transition-colors">
+                <Link href="/kontakt" className="text-sm hover:text-gray-300 transition-colors">
                   Kontakt oss
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* Right Column - About Bjørnestad */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white">Om Bjørnestad</h3>
-            <p className="mb-4">
-              Bjørnestad vektlegger god omsorg og nestekjærlighet. Tilbudet er fundamentert i recoveryorientert metodikk
-              og drives med tverrfaglig miljøterapautisk tilnærming.
-            </p>
-            <p>Målet er at den rusavhengige tar tilbake kontrollen i eget liv.</p>
+            <h3 className="text-xl font-bold mb-6 text-white">Om Bjørnestad</h3>
+            <div className="space-y-4 text-sm">
+              <p>
+                Bjørnestad vektlegger god omsorg og nestekjærlighet. Tilbudet er fundamentert i recoveryorientert
+                metodikk og drives med tverrfaglig miljøterapautisk tilnærming.
+              </p>
+              <p>Målet er at den rusavhengige tar tilbake kontrollen i eget liv.</p>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-steel-400 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p>&copy; {currentYear} Karmsund ABR. Alle rettigheter forbeholdt.</p>
-          <div className="mt-4 md:mt-0">
-            <Link href="/personvern" className="hover:text-sand-300 transition-colors">
+        {/* Bottom Section */}
+        <div className="border-t border-slate-400 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+            <p className="text-sm">&copy; {currentYear} Karmsund ABR. Alle rettigheter forbeholdt.</p>
+            <p className="text-xs text-gray-300">
+              Nettside levert av{" "}
+              <Link
+                href="https://webki.no"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors underline"
+              >
+                WebKI.no
+              </Link>
+            </p>
+          </div>
+          <div className="mt-4 md:mt-0 flex items-center space-x-1 text-sm">
+            <Link href="/personvern" className="hover:text-gray-300 transition-colors">
               Personvern
             </Link>
-            <span className="mx-2">|</span>
-            <Link href="/cookies" className="hover:text-sand-300 transition-colors">
+            <span className="text-gray-400">|</span>
+            <Link href="/cookies" className="hover:text-gray-300 transition-colors">
               Cookies
             </Link>
-            <span className="mx-2">|</span>
-            <Link
-              href="/cms"
-              className="text-steel-400 hover:text-sand-300 transition-colors text-xs"
-              aria-label="Administrator"
-            >
-              Admin
-            </Link>
+            <span className="text-gray-400">|</span>
+            <span className="text-gray-400">Admin</span>
           </div>
         </div>
       </div>

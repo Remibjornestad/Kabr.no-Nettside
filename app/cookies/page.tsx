@@ -2,11 +2,12 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Informasjon om cookies | Karmsund ABR - Bjørnestad",
-  description: "Informasjon om hvordan Karmsund ABR avdeling Bjørnestad bruker cookies på våre nettsider.",
-  keywords: "cookies, informasjonskapsler, personvern, Karmsund ABR, Bjørnestad",
+  title: "Cookie-policy - Kabr.no",
+  description:
+    "Informasjon om hvordan Karmsund ABR bruker cookies på våre nettsider. Lær om nødvendige, funksjonelle og statistikk-cookies, og hvordan du kan administrere dem.",
+  keywords: "cookies Karmsund ABR, informasjonskapsler, cookie policy, nettside cookies, administrere cookies",
   openGraph: {
-    title: "Informasjon om cookies | Karmsund ABR - Bjørnestad",
+    title: "Cookie-policy - Karmsund ABR Bjørnestad",
     description: "Informasjon om hvordan vi bruker cookies på våre nettsider",
     url: "https://www.kabr.no/cookies",
   },
