@@ -55,7 +55,7 @@ function HomeImageGallery() {
   }
 
   return (
-    <div className="relative w-full h-[500px] group">
+    <div className="relative w-full h-[500px] md:h-[600px] group">
       <div className="relative h-full w-full rounded-lg overflow-hidden">
         <OptimizedImage
           src={impressionImages[currentIndex].src}
