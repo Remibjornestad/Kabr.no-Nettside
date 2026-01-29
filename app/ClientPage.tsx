@@ -200,14 +200,35 @@ export default function ClientPage() {
       {/* Hva vi tilbyr */}
       <section className="py-16 px-4 md:px-8 bg-steel-100">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-slate-800 mb-8">Vårt tilbud</h2>
-
+          <div className="flex justify-center mb-2">
+            <OptimizedImage
+              src="/Bjørnestad.png"
+              alt="Bjørnestad logo"
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
           <div className="max-w-4xl mx-auto">
             <p className="text-lg text-slate-700 mb-6 text-center">
               På Bjørnestad kan du få kort- eller langtidsopphold i trygge og rolige omgivelser. Vi fokuserer på
               individuell oppfølging der du står i sentrum. Vårt tverrfaglige team tilbyr omsorg, støtte til
               rusmestring, arbeidstrening og fysiske aktiviteter – alt tilpasset dine behov og mål.
             </p>
+
+            {/* YouTube Video */}
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden shadow-lg mb-8">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/qGSQdQ8igmw?si=OLJvvDDqJx4LOz8g"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </div>
+
             <div className="text-center mt-6">
               <Button asChild className="bg-steel-500 hover:bg-steel-600 text-white">
                 <Link href="/vart-tilbud">Utforsk vårt tilbud</Link>
