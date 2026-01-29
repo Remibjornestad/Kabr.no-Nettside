@@ -1,9 +1,14 @@
 "use client"
 
-import Image, { type ImageProps } from "next/image"
-
-interface OptimizedImageProps extends Omit<ImageProps, "onLoadingComplete"> {
-  lowQualityUrl?: string
+interface OptimizedImageProps {
+  src: string
+  alt: string
+  fill?: boolean
+  width?: number
+  height?: number
+  className?: string
+  priority?: boolean
+  sizes?: string
 }
 
 export default function OptimizedImage({
@@ -13,23 +18,29 @@ export default function OptimizedImage({
   width,
   height,
   className,
-  lowQualityUrl,
   priority,
-  ...props
 }: OptimizedImageProps) {
+  const imgSrc = src || "/placeholder.svg"
+  
+  if (fill) {
+    return (
+      <img
+        src={imgSrc}
+        alt={alt}
+        className={`absolute inset-0 w-full h-full ${className || ""}`}
+        loading={priority ? "eager" : "lazy"}
+      />
+    )
+  }
+
   return (
-    <Image
-      src={src || "/placeholder.svg"}
+    <img
+      src={imgSrc}
       alt={alt}
-      fill={fill}
       width={width}
       height={height}
       className={className}
-      sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
       loading={priority ? "eager" : "lazy"}
-      priority={priority}
-      quality={100}
-      {...props}
     />
   )
 }
